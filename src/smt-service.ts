@@ -6,10 +6,11 @@ import * as ProcessEnv from "./lib/config/config";
 const path = require("path");
 import *  as log4js from "log4js";
 import { logger, httpLogger, cors } from "./lib/utils/LogUtils";
-import { UsersRepository } from "./lib/repositorys/UsersRepository";
-import { MiscelleneousController } from "./lib/controllers/MiscCOntroller";
 import { AuthenticationController } from "./lib/controllers/AuthController";
 import * as loadash from 'lodash';
+import { ProductController } from "./lib/controllers/ProductsController";
+import { WareHouseController } from "./lib/controllers/WareHouseController";
+import { stockController } from "./lib/controllers/StockController";
 
 useContainer(Container);
 /**
@@ -25,7 +26,7 @@ const expressApp = createExpressServer({
     routePrefix: ProcessEnv.ProcessEnvService._basecontext,
     // controllers: [__dirname + "./lib/controllers/*.js"]
     controllers: [ AuthenticationController,
-         MiscelleneousController]
+         ProductController, WareHouseController, stockController]
 
 });
 

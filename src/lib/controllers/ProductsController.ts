@@ -22,8 +22,7 @@ export class ProductController {
         logger.info("getAllCttCampaigns =>", Product);
         switch (user.error) {
             case 0:
-                
-                    return this.Productrepository.addProduct(Product);
+                return this.Productrepository.addProduct(Product);
                 
             case 401:
                 throw new CustomeError(401, "User not found");
