@@ -31,6 +31,16 @@ module.exports = function(sequelize: sequelize.Sequelize, DataTypes: DataTypes) 
       type: DataTypes.INTEGER,
       allowNull: true,
       field: 'whid'
+    },
+    createdby: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'createdby'
+    },
+    createddate: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      field: 'createddate'
     }
   }, {
     tableName: 'products'

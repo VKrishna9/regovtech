@@ -21,6 +21,9 @@ export interface productsAttribute {
   quantity?:number;
   price?:number;
   whid?:number;
+  createdby: number;
+  createddate: Date;
+  category: string;
 }
 export interface productsInstance extends Sequelize.Instance<productsAttribute>, productsAttribute { }
 export interface productsModel extends Sequelize.Model<productsInstance, productsAttribute> { }
@@ -30,6 +33,8 @@ export interface warehousesAttribute {
   warehousename:string;
   warehousetype:number;
   location: string;
+  createdby: number;
+  createddate: Date;
   
 }
 export interface warehousesInstance extends Sequelize.Instance<warehousesAttribute>, warehousesAttribute { }

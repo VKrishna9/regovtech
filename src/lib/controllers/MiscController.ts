@@ -3,16 +3,9 @@ import { Service } from "typedi";
 import {
     Body, BodyParam, Get, HeaderParam, ContentType, JsonController, Param, Post as HttpPost, Req, Res, OnUndefined
 } from "routing-controllers";
-
-import { LiveMonitRepository } from "../repositorys/LiveMonitRepository";
-import { BlockMessage, BlockErrorMessage, UnBlockErrorMessage, UnBlockMessage, BlockedData, BlockedDataErrorMessage, QueryUserSenderData } from "../utils/BlockMessage";
 import { logger, httpLogger, cors } from "../utils/LogUtils";
 import { LoginRepository } from "../repositorys/LoginRepository";
-import { LoadUserSenderData } from "../utils/LoadUserSenderData";
-import { MemDb } from "../utils/MemDb";
 import { TokenChecker, UserNotFoundError, LogInUser, CustomeError } from "../utils/TokenChecker";
-import {  EmailAlerts } from "../utils/EmailUtils"
-
 
 @JsonController("/misc")
 @Service()

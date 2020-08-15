@@ -21,7 +21,6 @@ export class AuthenticationController {
     @ContentType("application/json")
     async registerUser( @Body() login: Login) {
         logger.info("validateUser =>", login);
-        console.log("******************"+login.getUsername())
         return await this.loginrepository.registerUser(login);
     }
 

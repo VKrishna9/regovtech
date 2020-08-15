@@ -9,7 +9,7 @@ module.exports = function(sequelize: sequelize.Sequelize, DataTypes: DataTypes) 
     
     warehousename: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
       field: 'warehousename'
     },
     warehousetype: {
@@ -19,11 +19,20 @@ module.exports = function(sequelize: sequelize.Sequelize, DataTypes: DataTypes) 
     },
     location: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         field: 'location'
-      }
-   
+      },
+    createdby: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      field: 'createdby'
+    },
+    createddate: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      field: 'createddate'
+    }   
   }, {
-    tableName: 'warehouses'
+    tableName: 'warehouse'
   });
 };
