@@ -1,0 +1,13 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "build:live",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: build:live",
+			"detail": "nodemon --exec ./node_modules/.bin/ts-node -- ./src/smt-service.ts"
+		}
+	]
+}

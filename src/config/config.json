@@ -1,0 +1,27 @@
+{
+    "Database": 
+    {
+       "host": "localhost", 
+       "port": 3306,
+       "username": "root",
+       "password": "admin",
+       "db":"inventory",
+       "dialect": "mysql" 
+    }
+     ,
+  "log4j":
+      { 
+      "path": "/logs/ctoservice/service.log",
+      "interval": "HH",
+      "log4jpath":"E://Projects/NewCTO//dist/config/log4js.json"
+      }
+  ,
+  "service":
+      {
+      "port": "3000",
+      "basecontext": "/v1/api",
+      "loginterval":5000,
+      "userloginTimeout": 1000
+      }
+    
+}
