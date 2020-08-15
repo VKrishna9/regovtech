@@ -1,6 +1,7 @@
 export class Product {
 
     constructor(
+        private id: number,
         private Productname: string,
         private Producttype: number,
         private quantity: number,
@@ -12,7 +13,9 @@ export class Product {
 
     }
 
-
+    getId() {
+        return (this.id );
+    }
     getProductname() {
         return (this.Productname );
     }

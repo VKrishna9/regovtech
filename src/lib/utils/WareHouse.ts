@@ -1,6 +1,7 @@
 export class WareHouse {
 
     constructor(
+        private id: number,
         private warehousename: string,
         private warehousetype: number,
         private location: string
@@ -9,7 +10,9 @@ export class WareHouse {
 
     }
 
-
+    getId() {
+        return (this.id );
+    }
     getwWrehousename() {
         return (this.warehousename );
     }

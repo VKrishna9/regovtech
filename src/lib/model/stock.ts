@@ -2,24 +2,19 @@
 import * as sequelize from "sequelize";
 import { DataTypes } from 'sequelize';
 
-import {productsInstance, productsAttribute} from './db';
+import {stockInstance, stockAttribute} from './db';
 
 module.exports = function(sequelize: sequelize.Sequelize, DataTypes: DataTypes) {
-  return sequelize.define<productsInstance, productsAttribute>('products', {
+  return sequelize.define<stockInstance, stockAttribute>('stock', {
     
     productname: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: true,
       field: 'productname'
     },
-    producttype: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      field: 'producttype'
-    },
     quantity: {
       type: DataTypes.INTEGER,
-      allowNull: true,
+      allowNull: false,
       field: 'quantity'
     },
     price: {
@@ -27,7 +22,7 @@ module.exports = function(sequelize: sequelize.Sequelize, DataTypes: DataTypes) 
       allowNull: true,
       field: 'price'
     },
-    whid: {
+    warehouse: {
       type: DataTypes.INTEGER,
       allowNull: true,
       field: 'whid'
@@ -42,12 +37,17 @@ module.exports = function(sequelize: sequelize.Sequelize, DataTypes: DataTypes) 
       allowNull: false,
       field: 'createddate'
     },
-    category: {
-      type: DataTypes.STRING,
-      allowNull: true,
-      field: 'category'
-    }
+    productid: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        field: 'createdby'
+      },
+    warehouseid: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        field: 'createdby'
+      }
   }, {
-    tableName: 'products'
+    tableName: 'stock'
   });
 };

@@ -39,3 +39,18 @@ export interface warehousesAttribute {
 }
 export interface warehousesInstance extends Sequelize.Instance<warehousesAttribute>, warehousesAttribute { }
 export interface warehousesModel extends Sequelize.Model<warehousesInstance, warehousesAttribute> { }
+
+// table: stock
+export interface stockAttribute {
+  productname:string;
+  productid:number;
+  quantity:number;
+  price: number;
+  warehouse: string;
+  warehouseid: number;
+  createdby: number;
+  createddate: Date;
+  
+}
+export interface stockInstance extends Sequelize.Instance<stockAttribute>, stockAttribute { }
+export interface stockModel extends Sequelize.Model<stockInstance, stockAttribute> { }

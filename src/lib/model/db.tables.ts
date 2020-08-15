@@ -7,6 +7,7 @@ export interface ITables {
   users:def.usersModel;
   warehouse:def.warehousesModel;
   product:def.productsModel;
+  stock:def.stockModel;
   
 }
 
@@ -15,6 +16,7 @@ export const getModels = function(seq:sequelizer.Sequelize):ITables {
     users: seq.import(path.join(__dirname, './users')),
     warehouse: seq.import(path.join(__dirname, './warehouse')),
     product: seq.import(path.join(__dirname, './products')),
+    stock: seq.import(path.join(__dirname, './stock')),
     
   };
   return tables;

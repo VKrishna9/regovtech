@@ -19,7 +19,7 @@ export class WareHouseController {
     @HttpPost("/add")
     @ContentType("application/json")
     //  @OnUndefined(UserNotFoundError)
-    async getAllCttCampaigns( @TokenChecker({ required: true }) user: LogInUser, @Body() wareHouse: WareHouse) {
+    async addWareHouse( @TokenChecker({ required: true }) user: LogInUser, @Body() wareHouse: WareHouse) {
         logger.info("getAllCttCampaigns =>", wareHouse);
         switch (user.error) {
             case 0:
@@ -32,7 +32,52 @@ export class WareHouseController {
                 throw new CustomeError(599, "Session Timed out");
         }
     }
-   
+    @HttpPost("/delete")
+    @ContentType("application/json")
+    async removeWareHouse( @TokenChecker({ required: true }) user: LogInUser, @Body() wareHouse: WareHouse) {
+        logger.info("getAllCttCampaigns =>", wareHouse);
+        switch (user.error) {
+            case 0:
+                
+                    return this.wareHouserepository.deleteWarehouse(wareHouse);
+                
+            case 401:
+                throw new CustomeError(401, "User not found");
+            case 599:
+                throw new CustomeError(599, "Session Timed out");
+        }
+    }
+    @HttpPost("/details")
+    @ContentType("application/json")
+    async getWareHouse( @TokenChecker({ required: true }) user: LogInUser, @Body() wareHouse: WareHouse) {
+        logger.info("getAllCttCampaigns =>", wareHouse);
+        switch (user.error) {
+            case 0:
+                
+                    return this.wareHouserepository.getWareHouse(wareHouse);
+                
+            case 401:
+                throw new CustomeError(401, "User not found");
+            case 599:
+                throw new CustomeError(599, "Session Timed out");
+        }
+    }
+
+    @HttpPost("/all")
+    @ContentType("application/json")
+    async getWareHouses( @TokenChecker({ required: true }) user: LogInUser, @Body() wareHouse: WareHouse) {
+        logger.info("getAllCttCampaigns =>", wareHouse);
+        switch (user.error) {
+            case 0:
+                
+                    return this.wareHouserepository.getWareHouses(wareHouse);
+                
+            case 401:
+                throw new CustomeError(401, "User not found");
+            case 599:
+                throw new CustomeError(599, "Session Timed out");
+        }
+    }
 
 }
 

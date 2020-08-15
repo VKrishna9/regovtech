@@ -3,12 +3,8 @@ import * as dbTables from "../model/db.tables";
 import { DBconnect } from "../utils/dbUtils";
 const tables = dbTables.getModels(DBconnect);
 import { logger, httpLogger, cors } from "../utils/LogUtils";
-import { reject } from "bluebird";
-import { promisify } from "util";
-import { ProcessEnvService } from "../config/config";
-import { start } from "repl";
 import { WareHouse, WareHouseErrorMessage,WareHouseResponse } from "../utils/WareHouse";
-import { warehousesInstance } from "../model/db";
+import { warehousesInstance, productsInstance } from "../model/db";
 import { Product } from "../utils/Product";
 let dateTime = require('node-datetime');
 let dt = dateTime.create();
@@ -19,7 +15,7 @@ export class WareHouseRepository {
 
 
   async addWareHouse<T>(wareHouse: WareHouse) {
-
+    
      const resp = await tables.warehouse.create({
          warehousename: wareHouse.getwWrehousename(),
          warehousetype: wareHouse.getWarehousetype(),
@@ -73,7 +69,7 @@ export class WareHouseRepository {
        return (resp);
  }
 
- async getWareHouse(wareHouse: WareHouse) {
+ async getWareHouses(wareHouse: WareHouse) {
     logger.info("getProducts: =>", wareHouse)
     const resp = await tables.warehouse.findAll(
       {
@@ -97,16 +93,11 @@ export class WareHouseRepository {
     return resp;
   }
 
-  async getWareHouses(product: Product) {
+  async getWareHouse(wareHouse: WareHouse) {
     logger.info("getProducts: =>", wareHouse)
-    const resp = await tables.warehouse.findAll(
-      {
-        attributes: [
-          'warehousename'
-          , 'locality'
-        ],
-        where:
-          { warehousename: wareHouse.getwWrehousename(), status: 1 },
+    const resp =DBconnect.query("SELECT  *  FROM PRODUCTS A, WAREHOUSE B  where A.WHID = B.ID AND B.WAREHOUSENAME = ?", {
+                  replacements: [wareHouse.getwWrehousename()],
+        type: DBconnect.QueryTypes.SELECT,
         raw: true
       })
       .then((rows: warehousesInstance[]) => {
@@ -121,5 +112,7 @@ export class WareHouseRepository {
     return resp;
   }
   
+  
+ 
 }
 

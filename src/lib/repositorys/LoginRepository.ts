@@ -5,8 +5,6 @@ import { DBconnect } from "../utils/dbUtils";
 import { logger, httpLogger, cors } from "../utils/LogUtils";
 import * as CryptoJS from "crypto-js";
 import { ProcessEnvAuth } from "../config/config";
-import { createParamDecorator, HttpError } from "routing-controllers";
-import { MiscelleneousController } from "../controllers/MiscController";
 const dateTime = require("node-datetime");
 import * as dbTables from "../model/db.tables";
 const tables = dbTables.getModels(DBconnect);

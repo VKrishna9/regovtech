@@ -3,10 +3,6 @@ import * as dbTables from "../model/db.tables";
 import { DBconnect } from "../utils/dbUtils";
 const tables = dbTables.getModels(DBconnect);
 import { logger, httpLogger, cors } from "../utils/LogUtils";
-import { reject } from "bluebird";
-import { promisify } from "util";
-import { ProcessEnvService } from "../config/config";
-import { start } from "repl";
 import { Product, ProductErrorMessage,ProductResponse } from "../utils/Product";
 import { productsInstance } from "../model/db";
 let dateTime = require('node-datetime');
@@ -103,5 +99,7 @@ export class ProductRepository {
     console.log("resp =>", resp);
     return resp;
   }
+
+  
 }
 
