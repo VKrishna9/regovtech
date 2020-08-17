@@ -21,16 +21,16 @@ export function TokenChecker(options?: { required?: boolean }) {
                             
                             return new LogInUser(resultObj.userId, resultObj.userName, resultObj.token,0);
                         } else {
-                            return new LogInUser(1, "admin", "",0);
+                            return new LogInUser(1, "admin", 0);
                             //return new LogInUser(result.userId, result.userName, result.token,599);;
                         }
                     }).catch((error: any) => {
                         logger.error("TokenChecker: Failed===>", error)
-                        return new LogInUser(1, "admin", "",0);
+                        return new LogInUser(1, "admin",0);
                         //return new LogInUser(0, "", "",404);
                     });
             } else {
-                return new LogInUser(1, "admin", "",0);
+                return new LogInUser(1, "admin",0);
                // return new LogInUser(0, "", "",401);
             }
 
@@ -41,13 +41,11 @@ export function TokenChecker(options?: { required?: boolean }) {
 export class LogInUser {
     userId: number;
     userName: string;
-    role: string;
     error: number;
 
-    constructor(_userId: number, _userName: string, _role: string,_error:number) {
+    constructor(_userId: number, _userName: string,_error:number) {
         this.userId = _userId;
         this.userName = _userName;
-        this.role = _role;
         this.error=_error;
     }  
 }

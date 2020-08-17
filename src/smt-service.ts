@@ -36,7 +36,7 @@ expressApp.use(bodyParser.urlencoded({
 }));
 
 /**
- * Start the express app.
+ * Start the express app.   //
  */
 
 expressApp.use(log4js.connectLogger(httpLogger, { level: "auto" }));
