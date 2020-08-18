@@ -25,7 +25,7 @@ export class LoginRepository {
          username: login.getUsername(),
          password: this.encrypt(login.getPassword(), ProcessEnvAuth.__internalEncKey)
 
-          })   .then((user: any[]) => {
+          })   .then((user: any) => {
                 
                 logger.info("checkUserlogin: response =>", user)
                 
@@ -67,7 +67,7 @@ export class LoginRepository {
               status: 1
             }, raw: true
           })
-            .then((user: any[]) => {
+            .then((user: any) => {
                 const passwordEncrypt = this.encrypt(login.getPassword(), ProcessEnvAuth.__internalEncKey);
                 logger.info("checkUserlogin: response =>", user)
                 if (user.length > 0) {

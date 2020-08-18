@@ -23,7 +23,7 @@ export class ProductRepository {
          createddate: edate,
          category: Product.getCategory()
 
-          })   .then((result: any[]) => {
+          })   .then((result: any) => {
                 
                 logger.info("Product Register: response =>", result)
                 
@@ -49,7 +49,7 @@ export class ProductRepository {
         where: {
            productname: Product.getProductname()
         }
-     })   .then((result: any[]) => {
+     })   .then((result: any) => {
                
                logger.info("Product Delete: response =>", result)
                
@@ -80,7 +80,7 @@ export class ProductRepository {
           , 'categoty'
         ],
         where:
-          { productname: product.getProductname(), status: 1 },
+          { productname: product.getProductname() },
         raw: true
       })
       .then((rows: productsInstance[]) => {

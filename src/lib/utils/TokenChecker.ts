@@ -19,7 +19,7 @@ export function TokenChecker(options?: { required?: boolean }) {
                             const resultObj = JSON.parse(result);
                             logger.info("Result object:==>", resultObj)
                             
-                            return new LogInUser(resultObj.userId, resultObj.userName, resultObj.token,0);
+                            return new LogInUser( resultObj.userName, resultObj.token,0);
                         } else {
                             return new LogInUser(1, "admin", 0);
                             //return new LogInUser(result.userId, result.userName, result.token,599);;

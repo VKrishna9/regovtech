@@ -39,7 +39,7 @@ export class StockRepository {
          createdby: 1,
          createddate: edate
 
-          })   .then((result: any[]) => {
+          })   .then((result: any) => {
                 
                 logger.info("stock Register: response =>", result)
                 
@@ -83,7 +83,7 @@ export class StockRepository {
         createdby: 1,
         createddate: edate
 
-         })   .then((result: any[]) => {
+         })   .then((result: any) => {
                
                logger.info("stock Register: response =>", result)
                
@@ -112,13 +112,13 @@ async readWareHouse(wareHouse: string) {
           , 'id'
         ],
         where:
-          { warehousename: wareHouse, status: 1 },
+          { warehousename: wareHouse },
         raw: true
       })
       .then((rows: any) => {
         logger.info("getWareHouse: Succeds ==>", rows);
          return (rows[0].toJSON());
-      }).catch(error => {
+      }).catch((error:any) => {
         const data = JSON.parse(error);
         logger.error("getWareHouse: Failed: error ==>", error);
         return data;
@@ -136,7 +136,7 @@ async readWareHouse(wareHouse: string) {
           
         ],
         where:
-          { productname: product, status: 1 },
+          { productname: product },
         raw: true
       })
       .then((rows: any) => {
@@ -147,7 +147,7 @@ async readWareHouse(wareHouse: string) {
 
         // });
         return (rows[0].toJSON());
-      }).catch(error => {
+      }).catch((error:any) => {
         const data = JSON.parse(error);
         logger.error("getProducts: Failed: error ==>", error);
         return data;

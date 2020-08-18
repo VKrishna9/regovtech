@@ -23,7 +23,7 @@ export class WareHouseRepository {
          createdby: 1,
          createddate: edate
 
-          })   .then((result: any[]) => {
+          })   .then((result: any) => {
                 
                 logger.info("WareHouse: response =>", result)
                 
@@ -49,7 +49,7 @@ export class WareHouseRepository {
         where: {
            productname: wareHouse.getwWrehousename()
         }
-     })   .then((result: any[]) => {
+     })   .then((result: any) => {
                
                logger.info("WareHouse Delete: response =>", result)
                
@@ -78,13 +78,13 @@ export class WareHouseRepository {
           , 'locality'
         ],
         where:
-          { warehousename: wareHouse.getwWrehousename(), status: 1, location: wareHouse.getLocation() },
+          { warehousename: wareHouse.getwWrehousename(), location: wareHouse.getLocation() },
         raw: true
       })
       .then((rows: warehousesInstance[]) => {
         logger.info("getWareHouse: Succeds ==>", rows);
          return (rows);
-      }).catch(error => {
+      }).catch((error:any) => {
         const data = JSON.parse(error);
         logger.error("getWareHouse: Failed: error ==>", error);
         return data;
@@ -100,10 +100,10 @@ export class WareHouseRepository {
         type: DBconnect.QueryTypes.SELECT,
         raw: true
       })
-      .then((rows: warehousesInstance[]) => {
+      .then((rows: warehousesInstance) => {
         logger.info("getWareHouse: Succeds ==>", rows);
         return (rows);
-      }).catch(error => {
+      }).catch((error:any) => {
         const data = JSON.parse(error);
         logger.error("getWareHouse: Failed: error ==>", error);
         return data;
