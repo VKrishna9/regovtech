@@ -13,7 +13,7 @@
       { 
       "path": "/logs/ctoservice/service.log",
       "interval": "HH",
-      "log4jpath":"E://Projects/NewCTO//dist/config/log4js.json"
+      "log4jpath":"/config/log4js.json"
       }
   ,
   "service":

@@ -2,7 +2,7 @@
   "appenders": {
     "access": {
       "type": "dateFile",
-      "filename": "/logs/cto/http.log",
+      "filename": "logs/cto/http.log",
       "pattern": "-yyyy-MM-dd",
       "category": "http"
     }, 
@@ -15,7 +15,7 @@
     },
     "app": {
       "type": "dateFile",
-      "filename": "/logs/cto/http.log",
+      "filename": "logs/cto/http.log",
       "pattern": "-yyyy-MM-dd-HH",
       "compress": true,
       "layout": {
@@ -25,7 +25,7 @@
     },
     "error": {
       "type": "dateFile",
-      "filename": "/logs/cto/http.log",
+      "filename": "logs/cto/http.log",
       "pattern": "-yyyy-MM-dd-HH",
       "compress": true,
       "layout": {
