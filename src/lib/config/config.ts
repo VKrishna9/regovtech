@@ -1,5 +1,4 @@
 const EnvVariable = require("../../config/config.json");
-const EnvEmailVariable = require("../../config/emailconfig.json");
 
 export const ProcessEnvDatabase = {
     _host: EnvVariable.Database.host,

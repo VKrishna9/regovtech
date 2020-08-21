@@ -36,15 +36,12 @@ export class AuthenticationController {
     @HttpPost("/logout")
     @ContentType("application/json")
     @OnUndefined(UserNotFoundError)
-    async logout(@Logout({ required: true }) user: LogInUser) {
+    async logout(@TokenChecker({ required: true }) user: LogInUser) {
         
-        switch (user.error){
-            case 200:
+       
             throw  new CustomeError(200,"User log out successful");
-            case 599:
-            throw  new CustomeError(599,"Session Timed out");
-        }
-       // return await this.loginrepository.logout("");
+            
+         //  return new LogInUser("",200);
     }
 
 }

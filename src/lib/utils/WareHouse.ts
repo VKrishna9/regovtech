@@ -41,13 +41,17 @@ export class WareHouseErrorMessage {
 
 export class WareHouseResponse {
     wareHouseName: string;
+    message: string;
     
-    constructor(_wareHouseName: string) {
+    constructor(_wareHouseName: string, _message:string) {
        this.wareHouseName = _wareHouseName;
+       this.message = _message
       
     }
     getWareHouseName() {
         return (this.wareHouseName );
     }
-   
+    getMessage() {
+        return (this.message );
+    }
 }

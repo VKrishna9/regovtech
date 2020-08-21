@@ -17,33 +17,31 @@ export class StockRepository {
 
   async addstock<T>(stock: Stock) {
     const p = await this.readProduct(stock.getProductname())
-                .then((records) => {
+                .then((records: any) => {
                     
                     return records.id;
                 }).catch((error:any) => {
                     return 0;
                 });
     const w = await this.readWareHouse(stock.getWarehouse())
-            .then((records) => {                    
+            .then((records:any) => {                    
             return records.id;
     }).catch((error:any) => {
         return 0;
     });
      const resp = await tables.stock.upsert({
-         productname: stock.getProductname(),
-         productid:  p,
-         quantity: stock.getQuantity(),
-         price: stock.getPrice(),
-         warehouse: stock.getWarehouse(),
-         warehouseid:w,
-         createdby: 1,
-         createddate: edate
+        productid: p,
+        quantity: stock.getQuantity(),
+        price: stock.getPrice(),
+        warehouseid: await w,
+        createdby: 1,
+        createddate: edate
 
           })   .then((result: any) => {
                 
                 logger.info("stock Register: response =>", result)
                 
-                        const resp: StockResponse = new StockResponse(stock.getProductname());
+                        const resp: StockResponse = new StockResponse(stock.getProductname(),"Success");
                        
                         logger.info("stock Register: success: ==>", resp);
                         // return ({ username: user[0].UserName, userid: user[0].UserId, token: "token" });
@@ -61,25 +59,23 @@ export class StockRepository {
 
   async deletestock<T>(stock: Stock) {
     const p = await this.readProduct(stock.getProductname())
-                .then((records) => {
+                .then((records:any) => {
                     
                     return records.productid;
                 }).catch((error:any) => {
                     return 0;
                 });
     const w = await this.readWareHouse(stock.getWarehouse())
-            .then((records) => {                    
+            .then((records:any) => {                    
             return records.id;
     }).catch((error:any) => {
         return 0;
     });
     const resp = await tables.stock.upsert({
-        productname: stock.getProductname(),
-        productid: p,
+        productid: await p,
         quantity: stock.getQuantity(),
         price: stock.getPrice(),
-        warehouse: w,
-        warehouseid:1,
+        warehouseid: await w,
         createdby: 1,
         createddate: edate
 
@@ -87,7 +83,7 @@ export class StockRepository {
                
                logger.info("stock Register: response =>", result)
                
-                       const resp: StockResponse = new StockResponse(stock.getProductname());
+                       const resp: StockResponse = new StockResponse(stock.getProductname(),"Success");
                       
                        logger.info("stock Register: success: ==>", resp);
                        // return ({ username: user[0].UserName, userid: user[0].UserId, token: "token" });
@@ -124,7 +120,7 @@ async readWareHouse(wareHouse: string) {
         return data;
       });
     console.log("resp =>", resp);
-    return resp;
+    return Promise.all(resp);
   }
   async readProduct(product: string) {
     logger.info("getProducts: =>", product)
@@ -153,7 +149,7 @@ async readWareHouse(wareHouse: string) {
         return data;
       });
     console.log("resp =>", resp);
-    return resp;
+    return Promise.all(resp);
   } //commit
 }
 

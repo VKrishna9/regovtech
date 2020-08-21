@@ -9,7 +9,7 @@ import { Product } from "../utils/Product";
 let dateTime = require('node-datetime');
 let dt = dateTime.create();
 const edate = dt.format('Y-m-d H:M:S');
-
+import { Sequelize } from "sequelize-typescript";
 @Service()
 export class WareHouseRepository {
 
@@ -27,7 +27,7 @@ export class WareHouseRepository {
                 
                 logger.info("WareHouse: response =>", result)
                 
-                        const resp: WareHouseResponse = new WareHouseResponse(wareHouse.getwWrehousename());
+                        const resp: WareHouseResponse = new WareHouseResponse(wareHouse.getwWrehousename(), "Success");
                        
                         logger.info("WareHouse: success: ==>", resp);
                         // return ({ username: user[0].UserName, userid: user[0].UserId, token: "token" });
@@ -47,13 +47,13 @@ export class WareHouseRepository {
 
     const resp = await tables.warehouse.destroy({
         where: {
-           productname: wareHouse.getwWrehousename()
+           warehousename: wareHouse.getwWrehousename()
         }
      })   .then((result: any) => {
                
                logger.info("WareHouse Delete: response =>", result)
                
-                       const resp: WareHouseResponse = new WareHouseResponse(wareHouse.getwWrehousename());
+                       const resp: WareHouseResponse = new WareHouseResponse(wareHouse.getwWrehousename(),"Succes");
                       
                        logger.info("WareHouse Delete: success: ==>", resp);
                        // return ({ username: user[0].UserName, userid: user[0].UserId, token: "token" });
@@ -62,7 +62,7 @@ export class WareHouseRepository {
 
            }).catch((err: any) => {
                logger.error("WareHouse Delete: failed:==>", err);
-               const resp: WareHouseErrorMessage = new WareHouseErrorMessage(false, err);
+               const resp: WareHouseErrorMessage = new WareHouseErrorMessage(false, err.name);
                return (resp);
            });
        logger.info("Login request End.");
@@ -70,15 +70,21 @@ export class WareHouseRepository {
  }
 
  async getWareHouses(wareHouse: WareHouse) {
+    const Op = Sequelize.Op;
     logger.info("getProducts: =>", wareHouse)
     const resp = await tables.warehouse.findAll(
       {
         attributes: [
           'warehousename'
-          , 'locality'
+          , 'location'
         ],
         where:
-          { warehousename: wareHouse.getwWrehousename(), location: wareHouse.getLocation() },
+          { warehousename: {
+            [Op.like]: '%'+wareHouse.getwWrehousename()+'%'
+          }, 
+          location: {
+            [Op.like]: '%'+wareHouse.getLocation()+'%'
+          } },
         raw: true
       })
       .then((rows: warehousesInstance[]) => {
@@ -87,7 +93,7 @@ export class WareHouseRepository {
       }).catch((error:any) => {
         const data = JSON.parse(error);
         logger.error("getWareHouse: Failed: error ==>", error);
-        return data;
+        return new WareHouseErrorMessage(false,data.name);
       });
     console.log("resp =>", resp);
     return resp;
@@ -95,7 +101,7 @@ export class WareHouseRepository {
 
   async getWareHouse(wareHouse: WareHouse) {
     logger.info("getProducts: =>", wareHouse)
-    const resp =DBconnect.query("SELECT  *  FROM PRODUCTS A, WAREHOUSE B  where A.WHID = B.ID AND B.WAREHOUSENAME = ?", {
+    const resp =DBconnect.query("SELECT  *  FROM  WAREHOUSE B LEFT JOIN PRODUCTS A on  A.WHID = B.ID  WHERE B.WAREHOUSENAME = ? ", {
                   replacements: [wareHouse.getwWrehousename()],
         type: DBconnect.QueryTypes.SELECT,
         raw: true
@@ -106,7 +112,7 @@ export class WareHouseRepository {
       }).catch((error:any) => {
         const data = JSON.parse(error);
         logger.error("getWareHouse: Failed: error ==>", error);
-        return data;
+        return new WareHouseErrorMessage(false,data.name);
       });
     console.log("resp =>", resp);
     return resp;

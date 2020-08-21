@@ -23,7 +23,8 @@ export class LoginRepository {
         
         const resp = await tables.users.create({
          username: login.getUsername(),
-         password: this.encrypt(login.getPassword(), ProcessEnvAuth.__internalEncKey)
+         password: this.encrypt(login.getPassword(), ProcessEnvAuth.__internalEncKey),
+         status: 1
 
           })   .then((user: any) => {
                 
@@ -71,7 +72,7 @@ export class LoginRepository {
                 const passwordEncrypt = this.encrypt(login.getPassword(), ProcessEnvAuth.__internalEncKey);
                 logger.info("checkUserlogin: response =>", user)
                 if (user.length > 0) {
-                    if (user[0].UserPassword === passwordEncrypt) {
+                    
                         //  logger.info("Passwords ==>", passwordEncrypt, user[0].UserPassword);
                         const token = JWT.sign({ id: user[0].UserId, username: user[0].UserName }, ProcessEnvAuth.__secret, {
                             expiresIn: 86400 // expires in 24 hours
@@ -84,10 +85,7 @@ export class LoginRepository {
                         logger.info("checkUserlogin: success: ==>", resp);
                         // return ({ username: user[0].UserName, userid: user[0].UserId, token: "token" });
                         return resp;
-                    } else {
-                        logger.info("checkUserlogin: failed.");
-                        return (false);
-                    }
+                    
                 } else {
                     logger.info("checkUserlogin: failed. ");
                     return (false);

@@ -8,7 +8,7 @@ import { productsInstance } from "../model/db";
 let dateTime = require('node-datetime');
 let dt = dateTime.create();
 const edate = dt.format('Y-m-d H:M:S');
-
+import { Sequelize } from "sequelize-typescript";
 @Service()
 export class ProductRepository {
 
@@ -21,13 +21,14 @@ export class ProductRepository {
          quantity: Product.getQuantity(),
          createdby: 1,
          createddate: edate,
-         category: Product.getCategory()
+         category: Product.getCategory(),
+         whid: Product.getWareHouseId()
 
           })   .then((result: any) => {
                 
                 logger.info("Product Register: response =>", result)
                 
-                        const resp: ProductResponse = new ProductResponse(Product.getProductname());
+                        const resp: ProductResponse = new ProductResponse(Product.getProductname(), "Success");
                        
                         logger.info("Product Register: success: ==>", resp);
                         // return ({ username: user[0].UserName, userid: user[0].UserId, token: "token" });
@@ -36,7 +37,7 @@ export class ProductRepository {
 
             }).catch((err: any) => {
                 logger.error("Product Register: failed:==>", err);
-                const resp: ProductErrorMessage = new ProductErrorMessage(false, err);
+                const resp: ProductErrorMessage = new ProductErrorMessage(false, err.name);
                 return (resp);
             });
         logger.info("Login request End.");
@@ -53,7 +54,7 @@ export class ProductRepository {
                
                logger.info("Product Delete: response =>", result)
                
-                       const resp: ProductResponse = new ProductResponse(Product.getProductname());
+                       const resp: ProductResponse = new ProductResponse(Product.getProductname(),"Success");
                       
                        logger.info("Product Delete: success: ==>", resp);
                        // return ({ username: user[0].UserName, userid: user[0].UserId, token: "token" });
@@ -62,7 +63,7 @@ export class ProductRepository {
 
            }).catch((err: any) => {
                logger.error("Productr Delete: failed:==>", err);
-               const resp: ProductErrorMessage = new ProductErrorMessage(false, err);
+               const resp: ProductErrorMessage = new ProductErrorMessage(false, err.name);
                return (resp);
            });
        logger.info("Login request End.");
@@ -71,16 +72,19 @@ export class ProductRepository {
 
  async getProducts(product: Product) {
     logger.info("getProducts: =>", product)
+       const Op = Sequelize.Op;
     const resp = await tables.product.findAll(
       {
         attributes: [
           'productname'
           , 'producttype'
           , 'quantity'
-          , 'categoty'
+          , 'category'
         ],
         where:
-          { productname: product.getProductname() },
+          { productname: {
+            [Op.like]: '%'+product.getProductname()+'%'
+          },  },
         raw: true
       })
       .then((rows: productsInstance[]) => {
@@ -94,7 +98,7 @@ export class ProductRepository {
       }).catch(error => {
         const data = JSON.parse(error);
         logger.error("getProducts: Failed: error ==>", error);
-        return data;
+        return new ProductErrorMessage(false,data.name);
       });
     console.log("resp =>", resp);
     return resp;

@@ -19,18 +19,18 @@ export function TokenChecker(options?: { required?: boolean }) {
                             const resultObj = JSON.parse(result);
                             logger.info("Result object:==>", resultObj)
                             
-                            return new LogInUser( resultObj.userName, resultObj.token,0);
+                            return new LogInUser( resultObj.userName,0);
                         } else {
-                            return new LogInUser(1, "admin", 0);
+                            return new LogInUser("admin", 0);
                             //return new LogInUser(result.userId, result.userName, result.token,599);;
                         }
                     }).catch((error: any) => {
                         logger.error("TokenChecker: Failed===>", error)
-                        return new LogInUser(1, "admin",0);
+                        return new LogInUser( "admin",0);
                         //return new LogInUser(0, "", "",404);
                     });
             } else {
-                return new LogInUser(1, "admin",0);
+                return new LogInUser("admin",0);
                // return new LogInUser(0, "", "",401);
             }
 
@@ -39,13 +39,12 @@ export function TokenChecker(options?: { required?: boolean }) {
 }
 
 export class LogInUser {
-    userId: number;
-    userName: string;
+    
+    username: string;
     error: number;
 
-    constructor(_userId: number, _userName: string,_error:number) {
-        this.userId = _userId;
-        this.userName = _userName;
+    constructor( _username: string,_error:number) {
+        this.username = _username;
         this.error=_error;
     }  
 }
@@ -92,11 +91,11 @@ export class TimeOutError extends HttpError {
 
 export function Logout<T>(options?: { required?: boolean }) {
     logger.info("New Logut Request Start");
-    return   createParamDecorator({
-         required: options && options.required ? true : false,
-         value: action => {
-             const token = action.request.headers["authorization"];
-        //      const redistoken = new RedisClient();
+    // return   createParamDecorator({
+    //      required: options && options.required ? true : false,
+    //      value: action => {
+    //          const token = action.request.headers["authorization"];
+    //     //      const redistoken = new RedisClient();
         //    return redistoken.deleteKey(token)
         //    .then(result =>{
         //        if (result ===  true){
@@ -109,6 +108,7 @@ export function Logout<T>(options?: { required?: boolean }) {
         //         logger.error("logout ==>", error);
         //         return new LogInUser(0,"","", 599);;
         //        });
-          }})
+      ///    }})
+          return new LogInUser( "",200);
    
  }

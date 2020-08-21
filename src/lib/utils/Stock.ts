@@ -38,13 +38,16 @@ export class StockErrorMessage {
 
 export class StockResponse {
     ProductName: string;
+    message: string;
     
-    constructor(_ProductName: string) {
+    constructor(_ProductName: string, _message: string) {
        this.ProductName = _ProductName;
-      
+       this.message = _message;
     }
     getProductName() {
         return (this.ProductName );
     }
-   
+    getMessage() {
+        return (this.message );
+    }
 }
